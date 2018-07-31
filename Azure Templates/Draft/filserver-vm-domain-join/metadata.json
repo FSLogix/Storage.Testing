@@ -1,0 +1,9 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Build a fileserver and join it to an existing domain and then run a custom script",
+  "description": "This template deploys and fileserver, joins the VM to the fslogix domain and runs a custom powershell script.",
+  "summary": "This template deploys and fileserver, joins the VM to the fslogix domain and runs a custom powershell script.",
+  "githubUsername": "leeej84",
+  "dateUpdated": "31-07-2018"
+}
+

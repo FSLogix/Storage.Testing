@@ -112,6 +112,7 @@
                   "subnetRange": {
                       "value": "[variables('adSubnetAddressPrefix')]"
                   }
+                  
               }
           }
       },
