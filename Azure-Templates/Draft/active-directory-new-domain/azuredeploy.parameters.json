@@ -3,16 +3,43 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "adminUsername": {
-      "value": "GEN-UNIQUE"
+        "type": "string",
+        "defaultValue": "fsadmin",
+        "allowedValues": [
+            "fsadmin"
+        ],
+        "metadata": {
+            "description": "The name of the administrator account of the new VM and domain"
+        }            
     },
     "adminPassword": {
-      "value": "GEN-PASSWORD"
+        "type": "securestring",
+        "defaultValue": "Password100!",
+        "allowedValues": [
+            "Password100!"
+        ],
+        "metadata": {
+            "description": "The password for the administrator account of the new VM and domain"
+        } 
     },
     "domainName": {
-      "value": "mydomain.local"
-    },
-    "dnsPrefix": {
-      "value": "GEN-UNIQUE"
+        "type": "string",
+        "allowedValues": [
+            "fslogix.local"
+        ],
+        "defaultValue": "fslogix.local",
+        "metadata": {
+            "description": "The FQDN of the Active Directory Domain to be created"
+        }            
+    },        
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "allowedValues": [
+            "[resourceGroup().location]"
+        ],
+        "metadata": {
+            "description": "Location for all resources."
+        }
     }
-  }
 }

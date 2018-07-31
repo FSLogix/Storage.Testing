@@ -1,9 +1,9 @@
 {
   "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
   "itemDisplayName": "Create an Azure VM with a new AD Forest",
-  "description": "This template creates a new Azure VM, it configures the VM to be an AD DC for a new Forest",
+  "description": "This template creates a new Azure VM, it configures the VM to be an AD DC for a new Forest. Default details are placed because these values will be used when additional infrastructure is spun up in the future.",
   "summary": "This template creates an Azure VM with AD",
-  "githubUsername": "simongdavies",
-  "dateUpdated": "2018-07-04"
+  "githubUsername": "leeej84",
+  "dateUpdated": "2018-07-30"
 }
 

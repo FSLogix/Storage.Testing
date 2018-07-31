@@ -3,40 +3,34 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "existingVNETName": {
-      "value": "myvnet"
+      "value": "fsVNET"
     },
     "existingSubnetName": {
-      "value": "subnet"
+      "value": "fsSubnet"
     },
     "vmSize": {
-      "value": "Standard_A2"
+      "value": "Standard_D2s_v3"
     },
     "domainToJoin": {
-      "value": "contoso.local"
+      "value": "fslogix.local"
     },
     "domainUsername": {
-      "value": "azuerUser"
+      "value": "fsadmin"
     },
     "domainPassword": {
-      "value": "P@ssword!"
+      "value": "Password100!"
     },
     "domainJoinOptions": {
       "value": 3
     },
     "vmAdminUsername": {
-      "value": "azureUser"
+      "value": "fsadmin"
     },
     "vmAdminPassword": {
-      "value": "P@ssword!"
+      "value": "Password100!"
     },
     "dnsLabelPrefix": {
       "value": "GEN-UNIQUE" 
-    },
-    "adminUsername": {
-      "value": "GEN-UNIQUE"
-    },
-    "adminPassword": {
-     "value": "GEN-PASSWORD"
     }
   }
 }
