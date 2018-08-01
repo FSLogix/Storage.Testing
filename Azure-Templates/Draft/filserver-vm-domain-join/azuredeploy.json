@@ -35,9 +35,9 @@
     "ouPath": {
       "type": "string",
       "allowedValues": [
-        "CN=Computers,DC=fslogix,DC=local"
+        "OU=FS,DC=fslogix,DC=local"
       ],
-      "defaultValue": "CN=Computers,DC=fslogix,DC=local",
+      "defaultValue": "OU=FS,DC=fslogix,DC=local",
       "metadata": {
         "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: \"OU=testOU; DC=domain; DC=Domain; DC=com\""
       }
@@ -61,11 +61,10 @@
     "subnetName": "fsxSubnet",
     "subnetRef": "[resourceId(variables('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
     "publicIPAddressName": "fsx-fs-01-PublicIP",
-    "dnsNameForPublicIP": "[uniqueString(variables('vmName'))]",
+    "dnsNameForPublicIP": "[uniqueString(variables('nicName'))]",
     "location": "[resourceGroup().location]",
     "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join",
     "_artifactsLocationSasToken":"",
-    "scriptFolder": ".",
     "scriptFileName": "FileServerConfig.ps1"
   },
   "resources": [
@@ -185,7 +184,7 @@
               "fileUris": [
                 "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName'), variables('_artifactsLocationSasToken'))]"
               ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFolder'), '/', variables('scriptFileName'))]"
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'))]"
             }
           }
         }
