@@ -61,7 +61,6 @@
     "subnetName": "fsxSubnet",
     "subnetRef": "[resourceId(variables('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
     "publicIPAddressName": "fsx-fs-01-PublicIP",
-    "dnsNameForPublicIP": "[uniqueString(variables('vmName'))]",
     "location": "[resourceGroup().location]",
     "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join",
     "_artifactsLocationSasToken":"",
@@ -76,7 +75,7 @@
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[variables('dnsNameForPublicIP')]"
+          "domainNameLabel": "[concat( variables('VMName'), uniqueString(resourceGroup().id) )]"
         }
       }
     },    
