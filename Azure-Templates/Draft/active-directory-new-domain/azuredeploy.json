@@ -267,30 +267,9 @@
                             }
                         }
                     }
-                },
-                {
-                    "type": "extensions",
-                    "name": "CustomScriptExtension",
-                    "apiVersion": "2017-03-30",
-                    "location": "[variables('location')]",
-                    "dependsOn": [
-                      "[variables('vmName')]"
-                    ],
-                    "properties": {
-                      "publisher": "Microsoft.Compute",
-                      "type": "CustomScriptExtension",
-                      "typeHandlerVersion": "1.8",
-                      "autoUpgradeMinorVersion": true,
-                      "settings": {
-                        "fileUris": [
-                          "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName'), variables('_artifactsLocationSasToken'))]"
-                        ],
-                        "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'))]"
-                      }
-                    }
-                }
+                }   
             ]
-        },
+        },                
         {
             "type": "Microsoft.Resources/deployments",
             "name": "UpdateVNetDNS",
