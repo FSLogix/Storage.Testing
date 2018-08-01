@@ -9,7 +9,7 @@
                 "fsadmin"
             ],
             "metadata": {
-                "description": "The name of the administrator account of the new VM and domain"
+                "description": "The name of the administrator account of the new VM and domain - fixed value"
             }            
         },
         "adminPassword": {
@@ -19,7 +19,7 @@
                 "Password100!"
             ],
             "metadata": {
-                "description": "The password for the administrator account of the new VM and domain"
+                "description": "The password for the administrator account of the new VM and domain - fixed value"
             } 
         },
         "domainName": {
@@ -29,31 +29,34 @@
             ],
             "defaultValue": "fslogix.local",
             "metadata": {
-                "description": "The FQDN of the Active Directory Domain to be created"
+                "description": "The FQDN of the Active Directory Domain to be created - fixed value"
             }            
         },        
         "location": {
             "type": "string",
+            "allowedValues": [
+                "[resourceGroup().location]"
+            ],
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
-                "description": "Location for all resources."
+                "description": "Location for all resources - fixed value."
             }
         }
     },
     "variables": {
-        "virtualNetworkName": "adVNET",
+        "virtualNetworkName": "fsxVNET",
         "virtualNetworkAddressRange": "10.0.0.0/16",
-        "adLBFE": "FSLBFE",
-        "adLBBE": "FSLBBE",
-        "adRDPNAT": "fsadRDP",
-        "adNicName": "fsadNic",
+        "adLBFE": "FSX-DC-01LBFE",
+        "adLBBE": "FSX-DC-01LBBE",
+        "adRDPNAT": "fsx-dc-01RDP",
+        "adNicName": "fsx-dc-01Nic",
         "adNicIPAddress": "10.0.0.4",
-        "adVMName": "fsad01",
-        "adSubnetName": "fsSubnet",
+        "adVMName": "fsx-dc-01",
+        "adSubnetName": "fsxSubnet",
         "adSubnetAddressPrefix": "10.0.0.0/24",
-        "publicIPAddressName": "fsad01-PublicIP",
-        "adAvailabilitySetName": "fsad01-AvailabiltySet",
-        "adLBName": "fsad01-adLoadBalancer",
+        "publicIPAddressName": "fsx-dc-01-PublicIP",
+        "adAvailabilitySetName": "fsx-dc-01-AvailabiltySet",
+        "adLBName": "fsx-dc-01-adLoadBalancer",
         "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
         "_artifactsLocationSasToken":""
     },
