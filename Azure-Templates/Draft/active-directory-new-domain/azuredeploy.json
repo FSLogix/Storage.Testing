@@ -31,16 +31,6 @@
             "metadata": {
                 "description": "The FQDN of the Active Directory Domain to be created - fixed value"
             }            
-        },        
-        "location": {
-            "type": "string",
-            "allowedValues": [
-                "[resourceGroup().location]"
-            ],
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "Location for all resources - fixed value."
-            }
         }
     },
     "variables": {
@@ -58,14 +48,15 @@
         "adAvailabilitySetName": "fsx-dc-01-AvailabiltySet",
         "adLBName": "fsx-dc-01-adLoadBalancer",
         "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
-        "_artifactsLocationSasToken":""
+        "_artifactsLocationSasToken":"",
+        "location": "[resourceGroup().location]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
             "apiVersion": "2016-03-30",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
@@ -76,7 +67,7 @@
         {
             "apiVersion": "2017-03-30",
             "type": "Microsoft.Compute/availabilitySets",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "name": "[variables('adAvailabilitySetName')]",
             "properties": {
                 "PlatformUpdateDomainCount": 20,
@@ -116,7 +107,7 @@
             "type": "Microsoft.Network/loadBalancers",
             "name": "[variables('adLBName')]",
             "apiVersion": "2016-03-30",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
             ],
@@ -156,7 +147,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('adNicName')]",
             "apiVersion": "2016-03-30",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "dependsOn": [
                 "Microsoft.Resources/deployments/VNet",
                 "[resourceId('Microsoft.Network/loadBalancers', variables('adLBName'))]"
@@ -190,7 +181,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('adVMName')]",
             "apiVersion": "2017-03-30",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('adNicName'))]",
                 "[resourceId('Microsoft.Compute/availabilitySets', variables('adAvailabilitySetName'))]",
@@ -198,7 +189,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_D2_v2"
+                    "vmSize": "Basic_A2"
                 },
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('adAvailabilitySetName'))]"
@@ -249,7 +240,7 @@
                     "type": "extensions",
                     "name": "CreateADForest",
                     "apiVersion": "2017-03-30",
-                    "location": "[parameters('location')]",
+                    "location": "[variables('location')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines', variables('adVMName'))]"
                     ],
