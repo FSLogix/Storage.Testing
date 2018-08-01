@@ -46,7 +46,7 @@
         "adSubnetAddressPrefix": "10.0.0.0/24",
         "publicIPAddressName": "fsx-dc-01-PublicIP",
         "adAvailabilitySetName": "fsx-dc-01-AvailabiltySet",
-        "adLBName": "fsx-dc-01-adLoadBalancer",
+        "adLBName": "fsx-dc-01-LoadBalancer",
         "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
         "_artifactsLocationSasToken":"",
         "location": "[resourceGroup().location]"
