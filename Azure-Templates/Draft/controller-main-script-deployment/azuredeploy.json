@@ -123,6 +123,6 @@
             "domainJoinOptions": {"value": "[parameters('domainJoinOptions')]"}              
           }
         }
-      }                 
+      }                        
     ]
 }

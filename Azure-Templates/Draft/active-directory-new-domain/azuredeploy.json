@@ -124,8 +124,7 @@
             "name": "[variables('NicName')]",
             "apiVersion": "2016-03-30",
             "location": "[variables('location')]",
-            "dependsOn": [
-                "Microsoft.Resources/deployments/VNet",
+            "dependsOn": [                
                 "[resourceId('Microsoft.Network/loadBalancers', variables('LBName'))]"
             ],
             "properties": {

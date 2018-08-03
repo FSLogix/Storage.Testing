@@ -1,0 +1,19 @@
+{
+        "apiVersion": "2017-05-10",
+        "name": "File-Server-Template",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+             "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain/azuredeploy.json",
+             "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "adminUsername": {"value": "[parameters('adminUsername')]"},
+            "adminPassword": {"value": "[parameters('adminPassword')]"},
+            "domainName": {"value": "[parameters('domainName')]"},
+            "ouPath": {"value": "[parameters('ouPath')]"},
+            "domainJoinOptions": {"value": "[parameters('domainJoinOptions')]"}              
+          }
+        }
+      }
