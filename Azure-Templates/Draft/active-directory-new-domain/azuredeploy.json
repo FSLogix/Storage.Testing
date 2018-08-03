@@ -78,33 +78,7 @@
             "sku": {
                 "name": "Aligned"
             }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "name": "VNet",
-            "apiVersion": "2016-02-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('_artifactsLocation'), '/nestedtemplates/vnet.json', variables('_artifactsLocationSasToken'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualNetworkName": {
-                        "value": "[variables('virtualNetworkName')]"
-                    },
-                    "virtualNetworkAddressRange": {
-                        "value": "[variables('virtualNetworkAddressRange')]"
-                    },
-                    "subnetName": {
-                        "value": "[variables('SubnetName')]"
-                    },
-                    "subnetRange": {
-                        "value": "[variables('SubnetAddressPrefix')]"
-                    }
-                }
-            }
-        },
+        },        
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "[variables('LBName')]",
