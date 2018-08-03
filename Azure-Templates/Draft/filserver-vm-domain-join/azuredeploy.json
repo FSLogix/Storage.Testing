@@ -173,7 +173,7 @@
           "location": "[variables('location')]",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
-            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'JoinADDomain')]"
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'JoinADDomain')]",
           ],
           "properties": {
             "publisher": "Microsoft.Compute",
