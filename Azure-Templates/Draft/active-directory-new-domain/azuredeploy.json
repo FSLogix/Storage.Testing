@@ -1,7 +1,37 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {        
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "fsadmin",
+            "allowedValues": [
+                "fsadmin"
+            ],
+            "metadata": {
+                "description": "The name of the administrator account of the new VM and domain - fixed value"
+            }            
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "Password100!",
+            "allowedValues": [
+                "Password100!"
+            ],
+            "metadata": {
+                "description": "The password for the administrator account of the new VM and domain - fixed value"
+            } 
+        },
+        "domainName": {
+            "type": "string",
+            "allowedValues": [
+                "fslogix.local"
+            ],
+            "defaultValue": "fslogix.local",
+            "metadata": {
+                "description": "The FQDN of the Active Directory Domain to be created - fixed value"
+            }            
+        }      
     },
     "variables": {
         "virtualNetworkName": "fsxVNET",
