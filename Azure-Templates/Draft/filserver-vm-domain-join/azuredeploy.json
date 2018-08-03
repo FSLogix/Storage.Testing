@@ -142,12 +142,12 @@
       },
       "resources": [
         {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
           "apiVersion": "2015-06-15",
-          "name": "[concat(variables('vmName'),'/joindomain')]",
+          "type": "extensions",
+          "name": "JoinADDomain",
           "location": "[variables('location')]",
           "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]"            
           ],
           "properties": {
             "publisher": "Microsoft.Compute",
@@ -172,7 +172,8 @@
           "apiVersion": "2017-03-30",
           "location": "[variables('location')]",
           "dependsOn": [
-            "[variables('vmName')]"
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'JoinADDomain')]"
           ],
           "properties": {
             "publisher": "Microsoft.Compute",
@@ -187,7 +188,7 @@
             }
           }
         }
-      ]
+      ]      
     }
   ],
   "outputs": {

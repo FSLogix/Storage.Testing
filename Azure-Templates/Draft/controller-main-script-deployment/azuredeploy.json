@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "fsadmin",
+            "allowedValues": [
+                "fsadmin"
+            ],
+            "metadata": {
+                "description": "The name of the administrator account of the new VM and domain - fixed value"
+            }            
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "Password100!",
+            "allowedValues": [
+                "Password100!"
+            ],
+            "metadata": {
+                "description": "The password for the administrator account of the new VM and domain - fixed value"
+            } 
+        },
+        "domainName": {
+            "type": "string",
+            "allowedValues": [
+                "fslogix.local"
+            ],
+            "defaultValue": "fslogix.local",
+            "metadata": {
+                "description": "The FQDN of the Active Directory Domain to be created - fixed value"
+            }            
+        }
+    },
+    "variables": {
+        "virtualNetworkName": "fsxVNET",
+        "virtualNetworkAddressRange": "10.0.0.0/16",
+        "LBFE": "FSX-DC-01LBFE",
+        "LBBE": "FSX-DC-01LBBE",
+        "RDPNAT": "fsx-dc-01RDP",
+        "NicName": "fsx-dc-01Nic",
+        "NicIPAddress": "10.0.0.4",
+        "VMName": "fsx-dc-01",
+        "SubnetName": "fsxSubnet",
+        "SubnetAddressPrefix": "10.0.0.0/24",
+        "subnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
+        "resourceGroupName": "resourceId(resourceGroup().name",
+        "publicIPAddressName": "fsx-dc-01-PublicIP",
+        "AvailabilitySetName": "fsx-dc-01-AvailabiltySet",
+        "LBName": "fsx-dc-01-LoadBalancer",
+        "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
+        "_artifactsLocationSasToken":"",
+        "scriptFileName": "DomainControllerConfig.ps1",
+        "location": "[resourceGroup().location]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "VNet",
+            "apiVersion": "2016-02-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('_artifactsLocation'), '/nestedtemplates/vnet.json', variables('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkName": {
+                        "value": "[variables('virtualNetworkName')]"
+                    },
+                    "virtualNetworkAddressRange": {
+                        "value": "[variables('virtualNetworkAddressRange')]"
+                    },
+                    "subnetName": {
+                        "value": "[variables('SubnetName')]"
+                    },
+                    "subnetRange": {
+                        "value": "[variables('SubnetAddressPrefix')]"
+                    }
+                }
+            }
+        }                 
+    ]
+}

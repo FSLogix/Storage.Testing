@@ -1,37 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "adminUsername": {
-            "type": "string",
-            "defaultValue": "fsadmin",
-            "allowedValues": [
-                "fsadmin"
-            ],
-            "metadata": {
-                "description": "The name of the administrator account of the new VM and domain - fixed value"
-            }            
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "defaultValue": "Password100!",
-            "allowedValues": [
-                "Password100!"
-            ],
-            "metadata": {
-                "description": "The password for the administrator account of the new VM and domain - fixed value"
-            } 
-        },
-        "domainName": {
-            "type": "string",
-            "allowedValues": [
-                "fslogix.local"
-            ],
-            "defaultValue": "fslogix.local",
-            "metadata": {
-                "description": "The FQDN of the Active Directory Domain to be created - fixed value"
-            }            
-        }
+    "parameters": {        
     },
     "variables": {
         "virtualNetworkName": "fsxVNET",
@@ -161,7 +131,7 @@
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[variables('NicIPAddress')]",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('SubnetName'))]"
+                                "id": "[variables('subnetRef')]"
                             },
                             "loadBalancerBackendAddressPools": [
                                 {
@@ -267,6 +237,28 @@
                             }
                         }
                     }
+                },
+                {
+                    "type": "extensions",
+                    "name": "CustomScriptExtension",
+                    "apiVersion": "2017-03-30",
+                    "location": "[variables('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'CreateADForest')]",
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]"
+                    ],
+                    "properties": {
+                      "publisher": "Microsoft.Compute",
+                      "type": "CustomScriptExtension",
+                      "typeHandlerVersion": "1.8",
+                      "autoUpgradeMinorVersion": true,
+                      "settings": {
+                        "fileUris": [
+                          "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName'), variables('_artifactsLocationSasToken'))]"
+                        ],
+                        "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'))]"
+                      }
+                    }
                 }   
             ]
         },                
@@ -303,6 +295,6 @@
                     }
                 }
             }
-        }
+        }        
     ]
 }
