@@ -43,7 +43,7 @@
         "NicIPAddress": "10.0.0.4",
         "VMName": "fsx-dc-01",
         "SubnetName": "fsxSubnet",
-        "subnetRef": "[['resourceGroup().name'], 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
+        "subnetRef": "[['resourceGroup().id'], 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
         "SubnetAddressPrefix": "10.0.0.0/24",
         "publicIPAddressName": "fsx-dc-01-PublicIP",
         "AvailabilitySetName": "fsx-dc-01-AvailabiltySet",
