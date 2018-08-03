@@ -31,6 +31,26 @@
             "metadata": {
                 "description": "The FQDN of the Active Directory Domain to be created - fixed value"
             }            
+        },
+        "ouPath": {
+          "type": "string",
+          "allowedValues": [
+            "OU=FS,DC=fslogix,DC=local"
+          ],
+          "defaultValue": "OU=FS,DC=fslogix,DC=local",
+          "metadata": {
+            "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: \"OU=testOU; DC=domain; DC=Domain; DC=com\""
+          }
+        },
+        "domainJoinOptions": {
+          "type": "int",
+          "allowedValues": [
+            3
+          ],
+          "defaultValue": 3,
+          "metadata": {
+            "description": "Set of bit flags that define the join options. Default value of 3 is a combination of NETSETUP_JOIN_DOMAIN (0x00000001) & NETSETUP_ACCT_CREATE (0x00000002) i.e. will join the domain and create the account on the domain. For more information see https://msdn.microsoft.com/en-us/library/aa392154(v=vs.85).aspx"
+          }
         }
     },
     "variables": {
@@ -84,6 +104,25 @@
               "domainName": {"value": "[parameters('domainName')]"}
             }
           }
-       }                  
+       },
+       {
+        "apiVersion": "2017-05-10",
+        "name": "File-Server-Template",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+             "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain/azuredeploy.json",
+             "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "adminUsername": {"value": "[parameters('adminUsername')]"},
+            "adminPassword": {"value": "[parameters('adminPassword')]"},
+            "domainName": {"value": "[parameters('domainName')]"},
+            "ouPath": {"value": "[parameters('ouPath')]"},
+            "domainJoinOptions": {"value": "[parameters('domainJoinOptions')]"}              
+          }
+        }
+      }                 
     ]
 }
