@@ -59,45 +59,25 @@
     "virtualNetworkResourceGroup": "rg_fslogix_storage_testing",
     "virtualNetworkName": "fsxVNET",
     "subnetName": "fsxSubnet",
-    "subnetRef": "[resourceId(variables('virtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'),  variables('subnetName'))]",
-    "publicIPAddressName": "fsx-fs-01-PublicIP",
     "location": "[resourceGroup().location]",
     "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join",
     "_artifactsLocationSasToken":"",
     "scriptFileName": "FileServerConfig.ps1"
   },
-  "resources": [
-    {
-      "apiVersion": "2017-06-01",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[variables('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "[concat( variables('VMName'), uniqueString(resourceGroup().id) )]"
-        }
-      }
-    },    
+  "resources": [     
     {
       "apiVersion": "2018-04-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[variables('location')]",
-      "dependsOn": [        
-        "[variables('publicIPAddressName')]"
-      ],
       "properties": {
         "ipConfigurations": [
           {
             "name": "ipconfig1",
             "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-              },
+              "privateIPAllocationMethod": "Dynamic",              
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
               }
             }
           }
@@ -190,11 +170,5 @@
         }
       ]      
     }
-  ],
-  "outputs": {
-    "vm-fqdn": {
-      "type": "string",
-      "value": "[reference(variables('publicIPAddressName'), '2016-03-30').dnsSettings.fqdn]"
-    }
-  }
+  ]
 }
