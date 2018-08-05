@@ -108,6 +108,9 @@
        {
         "apiVersion": "2017-05-10",
         "name": "File-Server-Template",
+        "dependsOn": [
+            "Domain-Controller-Template"
+        ],
         "type": "Microsoft.Resources/deployments",
         "properties": {
           "mode": "Incremental",
