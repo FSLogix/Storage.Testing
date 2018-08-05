@@ -56,7 +56,6 @@
   "variables": {
     "vmName": "fsx-fs-01",
     "nicName": "fsx-fs-01Nic",
-    "virtualNetworkResourceGroup": "rg_fslogix_storage_testing",
     "virtualNetworkName": "fsxVNET",
     "subnetName": "fsxSubnet",
     "location": "[resourceGroup().location]",
