@@ -122,8 +122,6 @@
             "adminUsername": {"value": "[parameters('adminUsername')]"},
             "adminPassword": {"value": "[parameters('adminPassword')]"},
             "domainName": {"value": "[parameters('domainName')]"},
-            "ouPath": {"value": "[parameters('ouPath')]"},
-            "domainJoinOptions": {"value": "[parameters('domainJoinOptions')]"}
           }
         }
      }                        

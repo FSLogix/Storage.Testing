@@ -4,29 +4,20 @@
   "parameters": {
     "adminUsername": {
         "type": "string",
-        "defaultValue": "fsadmin",
-        "allowedValues": [
-            "fsadmin"
-        ],
+        "defaultValue": "fsadmin",        
         "metadata": {
             "description": "The name of the administrator account of the new VM and domain - fixed value"
         }            
     },
     "adminPassword": {
         "type": "securestring",
-        "defaultValue": "Password100!",
-        "allowedValues": [
-            "Password100!"
-        ],
+        "defaultValue": "Password100!",        
         "metadata": {
             "description": "The password for the administrator account of the new VM and domain - fixed value"
         } 
     },
     "domainName": {
-        "type": "string",
-        "allowedValues": [
-            "fslogix.local"
-        ],
+        "type": "string",        
         "defaultValue": "fslogix.local",
         "metadata": {
             "description": "The FQDN of the Active Directory Domain to be created - fixed value"

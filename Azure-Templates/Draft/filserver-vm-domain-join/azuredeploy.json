@@ -4,54 +4,25 @@
   "parameters": {
     "adminUsername": {
       "type": "string",
-      "defaultValue": "fsadmin",
-      "allowedValues": [
-        "fsadmin"
-      ],
+      "defaultValue": "fsadmin",      
       "metadata": {
         "description": "Username for the Virtual Machine."
       }
     },
     "adminPassword": {
       "type": "securestring",
-      "defaultValue": "Password100!",
-      "allowedValues": [
-        "Password100!"
-      ],
+      "defaultValue": "Password100!",      
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
     },
     "domainName": {
-      "type": "string",
-      "allowedValues": [
-          "fslogix.local"
-      ],
+      "type": "string",      
       "defaultValue": "fslogix.local",
       "metadata": {
           "description": "The FQDN of the Active Directory Domain to be created - fixed value"
       }          
-  },
-    "ouPath": {
-      "type": "string",
-      "allowedValues": [
-        "OU=FS,DC=fslogix,DC=local"
-      ],
-      "defaultValue": "OU=FS,DC=fslogix,DC=local",
-      "metadata": {
-        "description": "Specifies an organizational unit (OU) for the domain account. Enter the full distinguished name of the OU in quotation marks. Example: \"OU=testOU; DC=domain; DC=Domain; DC=com\""
-      }
-    },
-    "domainJoinOptions": {
-      "type": "int",
-      "allowedValues": [
-        3
-      ],
-      "defaultValue": 3,
-      "metadata": {
-        "description": "Set of bit flags that define the join options. Default value of 3 is a combination of NETSETUP_JOIN_DOMAIN (0x00000001) & NETSETUP_ACCT_CREATE (0x00000002) i.e. will join the domain and create the account on the domain. For more information see https://msdn.microsoft.com/en-us/library/aa392154(v=vs.85).aspx"
-      }
-    }
+    }    
   },
   "variables": {
     "vmName": "fsx-fs-01",
@@ -61,7 +32,10 @@
     "location": "[resourceGroup().location]",
     "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join",
     "_artifactsLocationSasToken":"",
-    "scriptFileName": "FileServerConfig.ps1"
+    "scriptFileName": "FileServerConfig.ps1",
+    "domainJoinOptions": 3,
+    "ouPath": "OU=FS,DC=fslogix,DC=local"
+
   },
   "resources": [     
     {
@@ -135,10 +109,10 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "Name": "[parameters('domainName')]",
-              "OUPath": "[parameters('ouPath')]",
+              "OUPath": "[variables('ouPath')]",
               "User": "[concat(parameters('domainName'), '\\', parameters('adminUsername'))]",
               "Restart": "true",
-              "Options": "[parameters('domainJoinOptions')]"
+              "Options": "[variables('domainJoinOptions')]"
             },
             "protectedSettings": {
               "Password": "[parameters('adminPassword')]"
