@@ -134,7 +134,7 @@
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[variables('NicIPAddress')]",
                             "subnet": {                                
-                                "id": "[(resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
                             },
                             "loadBalancerBackendAddressPools": [
                                 {
