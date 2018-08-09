@@ -34,7 +34,8 @@
     "_artifactsLocationSasToken":"",
     "scriptFileName": "FileServerConfig.ps1",
     "domainJoinOptions": 3,
-    "ouPath": "OU=FS,DC=fslogix,DC=local"
+    "ouPath": "OU=FS,DC=fslogix,DC=local",
+    "sizeOfDataDisk": "1024"
 
   },
   "resources": [     
@@ -81,6 +82,13 @@
             "sku": "2016-Datacenter",
             "version": "latest"
           },
+          "dataDisks": [
+            {
+              "diskSizeGB": "[variables('sizeOfDataDisk')]",
+              "lun": 0,
+              "createOption": "Empty"
+            },
+          ],
           "osDisk": {
             "createOption": "FromImage"
           }
