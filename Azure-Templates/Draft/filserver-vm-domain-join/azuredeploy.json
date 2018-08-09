@@ -34,7 +34,7 @@
     "_artifactsLocationSasToken":"",
     "scriptFileName": "FileServerConfig.ps1",
     "domainJoinOptions": 3,
-    "ouPath": "OU=FS,DC=fslogix,DC=local",
+    "ouPath": "OU=Servers,DC=fslogix,DC=local",
     "sizeOfDataDisk": "1024"
 
   },
