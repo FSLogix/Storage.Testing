@@ -1,0 +1,27 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "fsadmin",      
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "defaultValue": "Password100!",      
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "domainName": {
+      "type": "string",      
+      "defaultValue": "fslogix.local",
+      "metadata": {
+          "description": "The FQDN of the Active Directory Domain to be created - fixed value"
+      }          
+    }    
+  }
+}

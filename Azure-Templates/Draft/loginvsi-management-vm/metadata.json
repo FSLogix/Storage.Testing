@@ -1,0 +1,9 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Build a vm and install LoginVSI silently.",
+  "description": "This template deploys a VM, joins the VM to the fslogix domain using the custom powershell script extension.",
+  "summary": "This template deploys a VM, joins the VM to the fslogix domain using the custom powershell script extension.",
+  "githubUsername": "leeej84",
+  "dateUpdated": "2018-11-08"
+}
+
