@@ -22,6 +22,6 @@
       "metadata": {
           "description": "The FQDN of the Active Directory Domain to be created - fixed value"
       }          
-    }    
+    }
   }
 }

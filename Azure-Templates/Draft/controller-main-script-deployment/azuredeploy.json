@@ -164,6 +164,46 @@
             "domainName": {"value": "[parameters('domainName')]"}
           }
         }
-     }                        
+     },
+     {
+        "apiVersion": "2017-05-10",
+        "name": "Citrix-Session-Server-Template",
+        "dependsOn": [
+            "Citrix-Controller-Template"
+        ],
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+             "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/citrix-session-master-vm/azuredeploy.json",
+             "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "adminUsername": {"value": "[parameters('adminUsername')]"},
+            "adminPassword": {"value": "[parameters('adminPassword')]"},
+            "domainName": {"value": "[parameters('domainName')]"}
+          }
+        }
+     },
+     {
+        "apiVersion": "2017-05-10",
+        "name": "LoginVSI-Launcher_Template",
+        "dependsOn": [
+            "LoginVSI-Server-Template"
+        ],
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+             "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/loginvsi-launcher-master-vm/azuredeploy.json",
+             "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "adminUsername": {"value": "[parameters('adminUsername')]"},
+            "adminPassword": {"value": "[parameters('adminPassword')]"},
+            "domainName": {"value": "[parameters('domainName')]"}
+          }
+        }
+     }                         
     ]
 }

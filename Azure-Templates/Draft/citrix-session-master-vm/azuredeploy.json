@@ -1,0 +1,147 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "fsadmin",      
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "defaultValue": "Password100!",      
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "domainName": {
+      "type": "string",      
+      "defaultValue": "fslogix.local",
+      "metadata": {
+          "description": "The FQDN of the Active Directory Domain to be created - fixed value"
+      }          
+    }    
+  },
+  "variables": {
+    "vmName": "fsx-vda-tmp",
+    "nicName": "fsx-vda-01Nic",
+    "virtualNetworkName": "fsxVNET",
+    "subnetName": "fsxSubnet",
+    "location": "[resourceGroup().location]",
+    "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/citrix-session-master-vm",
+    "_artifactsLocationSasToken":"",
+    "scriptFileName": "CitrixSessionServerConfig.ps1",
+    "domainJoinOptions": 3,
+    "ouPath": "OU=MasterVDA,OU=Citrix,DC=fslogix,DC=local",
+   
+  },
+  "resources": [     
+    {
+      "apiVersion": "2018-04-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",              
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2018-04-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[variables('nicName')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_DS2_v2"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2016-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-06-15",
+          "type": "extensions",
+          "name": "JoinADDomain",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]"            
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "JsonADDomainExtension",
+            "typeHandlerVersion": "1.3",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "Name": "[parameters('domainName')]",
+              "OUPath": "[variables('ouPath')]",
+              "User": "[concat(parameters('domainName'), '\\', parameters('adminUsername'))]",
+              "Restart": "true",
+              "Options": "[variables('domainJoinOptions')]"
+            },
+            "protectedSettings": {
+              "Password": "[parameters('adminPassword')]"
+            }
+          }
+        },
+        {
+          "type": "extensions",
+          "name": "CustomScriptExtension",
+          "apiVersion": "2017-03-30",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'JoinADDomain')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.8",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "fileUris": [
+                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName'), variables('_artifactsLocationSasToken'))]"
+              ],
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'))]"
+            }
+          }
+        }
+      ]      
+    }
+  ]
+}
