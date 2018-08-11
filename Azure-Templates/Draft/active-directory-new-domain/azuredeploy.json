@@ -179,18 +179,6 @@
                             "storageAccountType": "Standard_LRS"
                         }
                     },
-                    "dataDisks": [
-                        {
-                            "name": "[concat(variables('VMName'), '_DataDisk')]",
-                            "caching": "None",
-                            "createOption": "Empty",
-                            "diskSizeGB": 20,
-                            "managedDisk": {
-                                "storageAccountType": "Standard_LRS"
-                            },
-                            "lun": 0
-                        }
-                    ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [

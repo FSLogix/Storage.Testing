@@ -30,7 +30,7 @@
     "virtualNetworkName": "fsxVNET",
     "subnetName": "fsxSubnet",
     "location": "[resourceGroup().location]",
-    "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join",
+    "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/fileserver-vm-domain-join",
     "_artifactsLocationSasToken":"",
     "scriptFileName": "FileServerConfig.ps1",
     "domainJoinOptions": 3,
