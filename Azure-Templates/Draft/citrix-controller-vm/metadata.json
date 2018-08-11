@@ -1,0 +1,9 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Build a citrix controller and join it to an existing domain.",
+  "description": "This template deploys a citrix controller, joins the VM to the fslogix domain using the custom powershell script extension.",
+  "summary": "This template deploys a citrix controller, joins the VM to the fslogix domain using the custom powershell script extension.",
+  "githubUsername": "leeej84",
+  "dateUpdated": "2018-08-11"
+}
+
