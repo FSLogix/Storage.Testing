@@ -35,7 +35,7 @@
         "ouPath": {
           "type": "string",
           "allowedValues": [
-            "OU=FS,DC=fslogix,DC=local"
+            "OU=Infrastructure,OU=LoginVSI,DC=fslogix,DC=local"
           ],
           "defaultValue": "OU=FS,DC=fslogix,DC=local",
           "metadata": {
@@ -116,6 +116,26 @@
           "mode": "Incremental",
           "templateLink": {
              "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/filserver-vm-domain-join/azuredeploy.json",
+             "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "adminUsername": {"value": "[parameters('adminUsername')]"},
+            "adminPassword": {"value": "[parameters('adminPassword')]"},
+            "domainName": {"value": "[parameters('domainName')]"}
+          }
+        }
+     },
+     {
+        "apiVersion": "2017-05-10",
+        "name": "LoginVSI-Server-Template",
+        "dependsOn": [
+            "File-Server-Template"
+        ],
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+             "uri":"https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/loginvsi-management-vm/azuredeploy.json",
              "contentVersion":"1.0.0.0"
           },
           "parameters": {
