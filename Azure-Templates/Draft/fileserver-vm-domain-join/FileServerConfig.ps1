@@ -35,5 +35,5 @@ New-Item "$driveLetter\Shared" –type directory
 If (Test-Path "$driverLetter\Shared") {
     New-SMBShare –Name "Storage" –Path "D:\Shared" –ContinuouslyAvailable $true –FullAccess "fslogix.local\domain admins" -ChangeAccess "fslogix.local\authenticated users"
 } else {
-    "Failed to create File Share, this will need to be done manually" | Out-File -FilePath "$logLoc\Setup.log" -Append 
+    
 }
