@@ -35,7 +35,7 @@
     "scriptFileName": "CitrixSessionServerConfig.ps1",
     "domainJoinOptions": 3,
     "ouPath": "OU=MasterVDA,OU=Citrix,DC=fslogix,DC=local",
-   
+    "VMSize": "Standard_D8S_v3"   
   },
   "resources": [     
     {
@@ -67,7 +67,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_DS2_v2"
+          "vmSize": "[variables('VMsize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",

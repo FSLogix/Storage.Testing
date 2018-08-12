@@ -35,7 +35,7 @@
     "scriptFileName": "CitrixControllerConfig.ps1",
     "domainJoinOptions": 3,
     "ouPath": "OU=Infrastructure,OU=Citrix,DC=fslogix,DC=local",
-   
+    "VMSize": "Standard_DS3_v2"   
   },
   "resources": [     
     {
@@ -67,7 +67,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_DS2_v2"
+          "vmSize": "[variables('VMsize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",

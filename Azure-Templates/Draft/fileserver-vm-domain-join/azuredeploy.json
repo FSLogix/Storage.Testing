@@ -35,8 +35,8 @@
     "scriptFileName": "FileServerConfig.ps1",
     "domainJoinOptions": 3,
     "ouPath": "OU=Servers,DC=fslogix,DC=local",
-    "sizeOfDataDisk": "1024"
-
+    "sizeOfDataDisk": "1024",
+    "VMSize": "Standard_DS2_v2"
   },
   "resources": [     
     {
@@ -68,7 +68,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_DS2_v2"
+          "vmSize": "[variables('VMsize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",

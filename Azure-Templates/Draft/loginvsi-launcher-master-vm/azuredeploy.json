@@ -35,7 +35,7 @@
     "scriptFileName": "LoginVSILauncherConfig.ps1",
     "domainJoinOptions": 3,
     "ouPath": "OU=Launchers,OU=LoginVSI,DC=fslogix,DC=local",
-   
+    "VMSize": "Standard_DS2_v2"   
   },
   "resources": [     
     {
@@ -67,7 +67,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_DS2_v2"
+          "vmSize": "[variables('VMsize')]"
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
