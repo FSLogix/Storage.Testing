@@ -41,7 +41,8 @@
         "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
         "_artifactsLocationSasToken":"",
         "scriptFileName": "DomainControllerConfig.ps1",
-        "location": "[resourceGroup().location]"
+        "location": "[resourceGroup().location]",
+        "sizeOfDataDisk": "1024"
     },
     "resources": [
         {
@@ -171,6 +172,13 @@
                         "sku": "2016-Datacenter",
                         "version": "latest"
                     },
+                    "dataDisks": [
+                        {
+                          "diskSizeGB": "[variables('sizeOfDataDisk')]",
+                          "lun": 0,
+                          "createOption": "Empty"
+                        },
+                      ],
                     "osDisk": {
                         "name": "[concat(variables('VMName'),'_OSDisk')]",
                         "caching": "ReadWrite",
