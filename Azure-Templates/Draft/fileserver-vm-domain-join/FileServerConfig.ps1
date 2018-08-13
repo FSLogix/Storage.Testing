@@ -33,7 +33,7 @@ for($i = 0; $i -lt $newdisk.Count ; $i++)
 $driveLetter = $dl.DriveLetter + ":"
 New-Item "$driveLetter\Shared" –type directory
 If (Test-Path "$driverLetter\Shared") {
-    New-SMBShare –Name "Storage" –Path "D:\Shared" –ContinuouslyAvailable $true –FullAccess "fslogix.local\domain admins" -ChangeAccess "fslogix.local\authenticated users"
+    New-SMBShare –Name "Storage" –Path "D:\Shared" –ContinuouslyAvailable $true –FullAccess 'fslogix.local\domain admins' -ChangeAccess 'fslogix.local\authenticated users'
 } else {
     
 }

@@ -178,7 +178,7 @@
                           "diskSizeGB": "[variables('sizeOfDataDisk')]",
                           "lun": 0,
                           "createOption": "Empty"
-                        },
+                        }
                       ],
                     "osDisk": {
                         "name": "[concat(variables('VMName'),'_OSDisk')]",
@@ -187,7 +187,7 @@
                         "managedDisk": {
                             "storageAccountType": "Standard_LRS"
                         }
-                    },
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [
