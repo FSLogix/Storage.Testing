@@ -35,8 +35,7 @@
         "VMName": "fsx-dc-01",
         "SubnetName": "fsxSubnet",
         "SubnetAddressPrefix": "10.0.0.0/24",
-        "publicIPAddressName": "fsx-dc-01-PublicIP",
-        "AvailabilitySetName": "fsx-dc-01-AvailabiltySet",
+        "publicIPAddressName": "fsx-dc-01-PublicIP",        
         "LBName": "fsx-dc-01-LoadBalancer",
         "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/active-directory-new-domain",
         "_artifactsLocationSasToken":"",
@@ -57,20 +56,7 @@
                     "domainNameLabel": "[concat( variables('VMName'), uniqueString(resourceGroup().id) )]"
                 }
             }
-        },
-        {
-            "apiVersion": "2017-03-30",
-            "type": "Microsoft.Compute/availabilitySets",
-            "location": "[variables('location')]",
-            "name": "[variables('AvailabilitySetName')]",
-            "properties": {
-                "PlatformUpdateDomainCount": 20,
-                "PlatformFaultDomainCount": 2
-            },
-            "sku": {
-                "name": "Aligned"
-            }
-        },        
+        },                
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "[variables('LBName')]",
@@ -151,16 +137,12 @@
             "location": "[variables('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('NicName'))]",
-                "[resourceId('Microsoft.Compute/availabilitySets', variables('AvailabilitySetName'))]",
                 "[resourceId('Microsoft.Network/loadBalancers', variables('LBName'))]"
             ],
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[variables('VMsize')]"
-                },
-                "availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('AvailabilitySetName'))]"
-                },
+                },                
                 "osProfile": {
                     "computerName": "[variables('VMName')]",
                     "adminUsername": "[parameters('adminUsername')]",
