@@ -12,6 +12,9 @@
 $logLoc = "C:\CustomPOSH_Logs"
 $null = New-Item -ItemType Directory -Path $logLoc -Force
 
+#Disable Windows Firewall
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
 ##Create folder share for LoginVSI on the OS Drive
 New-Item "C:\VSI_Share" –type directory
 If (Test-Path "C:\VSI_Share") {

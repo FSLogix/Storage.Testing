@@ -27,6 +27,9 @@ Function Set-FolderACL {
 $logLoc = "C:\CustomPOSH_Logs"
 $null = New-Item -ItemType Directory -Path $logLoc -Force
 
+#Disable Windows Firewall
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
 ##Data disk initialisation - NOTE, setup for the number of disks I know will be attached - just a single data disk in this scenario
 $newdisk = @(get-disk | Where-Object partitionstyle -eq 'raw')
 $Labels = @('Data')

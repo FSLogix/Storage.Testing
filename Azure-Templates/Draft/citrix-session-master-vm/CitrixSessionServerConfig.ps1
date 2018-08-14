@@ -11,3 +11,6 @@
 ##Log File configuration
 $logLoc = "C:\CustomPOSH_Logs"
 $null = New-Item -ItemType Directory -Path $logLoc -Force
+
+#Disable Windows Firewall
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
