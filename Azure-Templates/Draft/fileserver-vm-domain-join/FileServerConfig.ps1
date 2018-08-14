@@ -48,8 +48,8 @@ for($i = 0; $i -lt $newdisk.Count ; $i++)
 $driveLetter = $dl.DriveLetter + ":"
 New-Item "$driveLetter\Shared" –type directory
 If (Test-Path "$driveLetter\Shared") {
-    New-SMBShare –Name "Storage" –Path "$driveLetter\Shared" –FullAccess "lj.local\Domain Admins" -ChangeAccess "lj.local\Domain Users"
-    Set-FolderACL -folderPath "$driveLetter\Shared" -userGroup "lj.local\Domain Users"
+    New-SMBShare –Name "Storage" –Path "$driveLetter\Shared" –FullAccess "fslogix.local\Domain Admins" -ChangeAccess "fslogix.local\Domain Users"
+    Set-FolderACL -folderPath "$driveLetter\Shared" -userGroup "fslogix.local\Domain Users"
 } else {
     "Failed to create File Share, this will need to be done manually" | Out-File -FilePath "$logLoc\Setup.log" -Append
 }
