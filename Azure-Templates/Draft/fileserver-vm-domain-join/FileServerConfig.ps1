@@ -8,6 +8,21 @@
 #Usage:             Used for FSLogix storage testing
 ########
 
+Function Set-FolderACL {
+    Param
+    (
+         [Parameter(Mandatory=$true, Position=0)]
+         [string] $folderPath,
+         [Parameter(Mandatory=$true, Position=1)]
+         [string] $userGroup
+    )
+    $userGroup
+    $Acl = Get-Acl $folderPath
+    $Ar = New-Object  system.security.accesscontrol.filesystemaccessrule("$userGroup","FullControl","Allow")
+    $Acl.SetAccessRule($Ar)
+    Set-Acl $folderPath $Acl
+}
+
 ##Log File configuration
 $logLoc = "C:\CustomPOSH_Logs"
 $null = New-Item -ItemType Directory -Path $logLoc -Force
@@ -32,8 +47,9 @@ for($i = 0; $i -lt $newdisk.Count ; $i++)
 #Grab the driveletter from the created drive
 $driveLetter = $dl.DriveLetter + ":"
 New-Item "$driveLetter\Shared" –type directory
-If (Test-Path "$driverLetter\Shared") {
-    New-SMBShare –Name "Storage" –Path "D:\Shared" –ContinuouslyAvailable $true –FullAccess 'fslogix.local\domain admins' -ChangeAccess 'fslogix.local\authenticated users'
+If (Test-Path "$driveLetter\Shared") {
+    New-SMBShare –Name "Storage" –Path "$driveLetter\Shared" –FullAccess "lj.local\Domain Admins" -ChangeAccess "lj.local\Domain Users"
+    Set-FolderACL -folderPath "$driveLetter\Shared" -userGroup "lj.local\Domain Users"
 } else {
-    
+    "Failed to create File Share, this will need to be done manually" | Out-File -FilePath "$logLoc\Setup.log" -Append
 }
