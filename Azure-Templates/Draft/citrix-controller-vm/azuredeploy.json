@@ -137,56 +137,14 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName1'), variables('_artifactsLocationSasToken'))]"
+                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName1'), variables('_artifactsLocationSasToken'))]",
+                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName2'), variables('_artifactsLocationSasToken'))]",
+                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName3'), variables('_artifactsLocationSasToken'))]"
               ],
               "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName1'))]"
             }
           }
-        },
-        {
-          "type": "extensions",
-          "name": "FarmInstallation",
-          "apiVersion": "2017-03-30",
-          "location": "[variables('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
-            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'RoleInstalls')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.8",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": [
-                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName2'), variables('_artifactsLocationSasToken'))]"
-              ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName2'))]"
-            }
-          }
-        },
-        {
-          "type": "extensions",
-          "name": "FarmConfiguration",
-          "apiVersion": "2017-03-30",
-          "location": "[variables('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
-            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'FarmInstallation')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.8",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": [
-                "[concat(variables('_artifactsLocation'), '/', variables('scriptFileName3'), variables('_artifactsLocationSasToken'))]"
-              ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName3'),' -secUser ',parameters('domainName'),'/',parameters('adminUsername'),' -secPasswd ',parameters('adminPassword'))]"
-            }
-          }
-        }
+        }        
       ]      
     }
   ]

@@ -136,31 +136,10 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName1'), variables('_artifactsLocationSasToken'))]"
-              ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName1'))]"
-            }
-          }
-        },
-        {
-          "type": "extensions",
-          "name": "CitrixVDAInstall",
-          "apiVersion": "2017-03-30",
-          "location": "[variables('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
-            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'CitrixSessionServerRoles')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.8",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": [
+                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName1'), variables('_artifactsLocationSasToken'))]",
                 "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName2'), variables('_artifactsLocationSasToken'))]"
               ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName2'))]"
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName1'))]"
             }
           }
         }
