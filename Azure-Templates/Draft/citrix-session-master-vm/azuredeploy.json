@@ -32,7 +32,8 @@
     "location": "[resourceGroup().location]",
     "_artifactsLocation": "https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Draft/citrix-session-master-vm",
     "_artifactsLocationSasToken":"",
-    "scriptFileName": "CitrixSessionServerConfig.ps1",
+    "scriptFileName1": "CitrixSessionServerRoles.ps1",
+    "scriptFileName2": "CitrixSessionServerConfig.ps1",
     "domainJoinOptions": 3,
     "ouPath": "OU=MasterVDA,OU=Citrix,DC=fslogix,DC=local",
     "VMSize": "Standard_D8S_v3"   
@@ -121,7 +122,7 @@
         },
         {
           "type": "extensions",
-          "name": "CustomScriptExtension",
+          "name": "CitrixSessionServerRoles",
           "apiVersion": "2017-03-30",
           "location": "[variables('location')]",
           "dependsOn": [
@@ -135,9 +136,31 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName'), variables('_artifactsLocationSasToken'))]"
+                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName1'), variables('_artifactsLocationSasToken'))]"
               ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName'))]"
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName1'))]"
+            }
+          }
+        },
+        {
+          "type": "extensions",
+          "name": "CustomScriptExtension",
+          "apiVersion": "2017-03-30",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]", 
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('VMName'), 'CitrixSessionServerRoles')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.8",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "fileUris": [
+                "[concat(variables('_artifactsLocation'), '/', variables('ScriptFileName2'), variables('_artifactsLocationSasToken'))]"
+              ],
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFileName2'))]"
             }
           }
         }

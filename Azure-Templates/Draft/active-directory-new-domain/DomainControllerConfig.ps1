@@ -19,14 +19,14 @@ $null = New-Item -ItemType Directory -Path $downloadLoc -Force
  
 ##Location for files
 $downloadFiles = @()
-$downloadFiles += ("https://download.microsoft.com/download/B/0/0/B00291D0-5A83-4DE7-86F5-980BC00DE05A/AzureADConnect.msi")
+$downloadFiles += ("https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Downloads/AzureADConnect.msi")
  
 ##Loop through the array and download all files
 foreach ($file in $downloadFiles) {
     #Get filename of downloadable file
     $fileName = $file.SubString($file.LastIndexOf("/")+1,($file.Length - $file.LastIndexOf("/"))-1)    
     [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
-    Invoke-WebRequest -Uri $file -OutFile "$downloadLoc\$fileName"
+    Invoke-WebRequest -UseBasicParsing -Uri $file -OutFile "$downloadLoc\$fileName"
     
     #Wait for Windows to complete renaming the file from temp
     Start-Sleep -Second 5
@@ -39,7 +39,7 @@ foreach ($file in $downloadFiles) {
 }
 
 #Run install for AD Connect
-Start-Process -FilePath msiexec -ArgumentList "/i","AzureADConnect.msi","/q" -Wait
+Start-Process -FilePath msiexec -ArgumentList "/i","$downloadloc\AzureADConnect.msi","/q" -Wait
 
 #Create OU structure
 #Citrix OU
