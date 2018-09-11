@@ -123,7 +123,7 @@
         },
         {
           "type": "extensions",
-          "name": "RolesInstall",
+          "name": "RoleInstalls",
           "apiVersion": "2017-03-30",
           "location": "[variables('location')]",
           "dependsOn": [

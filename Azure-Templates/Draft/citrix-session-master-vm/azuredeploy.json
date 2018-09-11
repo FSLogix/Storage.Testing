@@ -144,7 +144,7 @@
         },
         {
           "type": "extensions",
-          "name": "CustomScriptExtension",
+          "name": "CitrixVDAInstall",
           "apiVersion": "2017-03-30",
           "location": "[variables('location')]",
           "dependsOn": [
