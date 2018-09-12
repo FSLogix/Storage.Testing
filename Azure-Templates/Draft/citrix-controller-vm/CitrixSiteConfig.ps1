@@ -11,7 +11,7 @@ $userPasswd = ConvertTo-SecureString -String $secPasswd -AsPlainText -Force
 $myCreds = New-Object System.Management.Automation.PSCredential ($secUser,$userPasswd)
 
 ##XenDesktop Farm Creation Variables
-$dbserver="fsx-xdc-01.fslogix.local\sqlexpress" 
+$dbserver="localhost\sqlexpress" 
 $sitename="XDSite"
 $licenseserver="fsx-xdc-01.fslogix.local"
 $Citrixadmingroup="fslogix.local\domain admins"
