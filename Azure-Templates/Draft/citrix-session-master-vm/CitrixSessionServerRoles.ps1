@@ -94,7 +94,7 @@ $downloadLoc = "C:\CustomPOSH_Downloads"
 
 ##Location for files to be downloaded
 $downloadFiles = @()
-$downloadFiles += ("https://web.leeejeffries.com/NDP471-KB4033342-x86-x64-AllOS-ENU.exe")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/NDP471-KB4033342-x86-x64-AllOS-ENU.exe")
 
 ##Log Folder Creation
 $null = New-Item -ItemType Directory -Path $logLoc -Force

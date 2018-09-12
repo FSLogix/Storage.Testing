@@ -19,7 +19,7 @@ $null = New-Item -ItemType Directory -Path $downloadLoc -Force
  
 ##Location for files
 $downloadFiles = @()
-$downloadFiles += ("https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Downloads/AzureADConnect.msi")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/AzureADConnect.msi")
  
 ##Loop through the array and download all files
 foreach ($file in $downloadFiles) {

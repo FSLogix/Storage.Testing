@@ -271,7 +271,7 @@ DS_WriteLog "I" "Download location is $downloadLoc" $LogFile
 
 ##Location for files to be downloaded
 $downloadFiles = @()
-$downloadFiles += ("https://download.microsoft.com/download/9/E/6/9E63300C-0941-4B45-A0EC-0008F96DD480/NDP471-KB4033342-x86-x64-AllOS-ENU.exe")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/NDP471-KB4033342-x86-x64-AllOS-ENU.exe")
 DS_WriteLog "I" "Download .NET 4.7.1 Install" $LogFile
 
 ##Download Folder Creation

@@ -89,8 +89,8 @@ $downloadLoc = "C:\CustomPOSH_Downloads"
 
 ##Location for files to be downloaded
 $downloadFiles = @()
-$downloadFiles += ("https://web.leeejeffries.com/XenApp_and_XenDesktop_7_18.iso")
-$downloadFiles += ("https://download.microsoft.com/download/9/0/7/907AD35F-9F9C-43A5-9789-52470555DB90/ENU/SQLEXPR_x64_ENU.exe")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/XenApp_and_XenDesktop_7_18.iso")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/SQLEXPR_x64_ENU.exe")
 
 ##Log Folder Creation
 $null = New-Item -ItemType Directory -Path $logLoc -Force

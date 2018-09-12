@@ -27,8 +27,8 @@ $downloadLoc = "C:\CustomPOSH_Downloads"
 
 ##Location for files to be downloaded
 $downloadFiles = @()
-$downloadFiles += ("https://s3-eu-west-1.amazonaws.com/loginvsidata/Login+VSI+Full/LoginVSI4132.exe")
-$downloadFiles += ("https://www.7-zip.org/a/7z1805-x64.msi")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/LoginVSI4132.exe")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/7z1805-x64.msi")
 
 
 Function Set-FolderACL {

@@ -25,9 +25,9 @@ $downloadLoc = "C:\CustomPOSH_Downloads"
 
 ##Location for files to be downloaded
 $downloadFiles = @()
-$downloadFiles += ("https://web.leeejeffries.com/XenApp_and_XenDesktop_7_18.iso")
-$downloadFiles += ("https://web.leeejeffries.com/LVSITarget.zip")
-$downloadFiles += ("https://www.7-zip.org/a/7z1805-x64.msi")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/XenApp_and_XenDesktop_7_18.iso")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/LVSITarget.zip")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/7z1805-x64.msi")
 
 ##Log Folder Creation
 $null = New-Item -ItemType Directory -Path $logLoc -Force
