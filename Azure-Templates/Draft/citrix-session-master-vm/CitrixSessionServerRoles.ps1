@@ -8,9 +8,82 @@
 #Usage:             Used for FSLogix storage testing
 ########
 
+Function Set-AutoLogon{
+
+    [CmdletBinding()]
+    Param(        
+        [Parameter(Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$DefaultUsername,
+        [Parameter(Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$DefaultPassword,
+        [Parameter(Mandatory=$False,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [AllowEmptyString()]
+        [String[]]$AutoLogonCount,
+        [Parameter(Mandatory=$False,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [AllowEmptyString()]
+        [String[]]$Script                
+    )
+
+    Begin
+    {
+        #Registry path declaration
+        $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+        $RegROPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"    
+    }
+    
+    Process
+    {
+        try
+        {
+            #setting registry values
+            Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String  
+            Set-ItemProperty $RegPath "DefaultUsername" -Value "$DefaultUsername" -type String  
+            Set-ItemProperty $RegPath "DefaultPassword" -Value "$DefaultPassword" -type String
+            if($AutoLogonCount)
+            {                
+                Set-ItemProperty $RegPath "AutoLogonCount" -Value "$AutoLogonCount" -type DWord            
+            }
+            else
+            {
+                Set-ItemProperty $RegPath "AutoLogonCount" -Value "1" -type DWord
+            }
+            if($Script)
+            {                
+                Set-ItemProperty $RegROPath "(Default)" -Value "$Script" -type String            
+            }
+            else
+            {            
+                Set-ItemProperty $RegROPath "(Default)" -Value "" -type String            
+            }        
+        }
+        catch
+        {
+            Write-Output "An error had occured $Error"            
+        }
+    }    
+    End
+    {        
+        #End
+    }
+}
+
+##Function to grab current script directory
+function Get-Script-Directory
+{
+    $scriptInvocation = (Get-Variable MyInvocation -Scope 1).Value
+    return Split-Path $scriptInvocation.MyCommand.Path
+}
+
 ##Variable Configuration
 #Download Filenames
 $dotNetFilename = "NDP471-KB4033342-x86-x64-AllOS-ENU.exe"
+
+#Script Run Credentials
+$secUser = "fslogix.local\Script.Admin"
+$secPasswd = "V3ryS3cur3Sc1ptAdm1n"
+
+#Get Current Script Folder
+$currentFolder = Get-Script-Directory
 
 ##Log File configuration
 $logLoc = "C:\CustomPOSH_Logs"
@@ -52,5 +125,8 @@ if (Test-Path "$downloadLoc\$dotNetFilename") {
 } else {
     "Could not find DotNet File Download - Perhaps it failed to download, Please install manually" | Out-File -FilePath "$logLoc\Setup.log" -Append
 }
+
+#Set AutoLogon
+Set-AutoLogon -DefaultUsername $secUser -DefaultPassword $secPasswd -Script "C:\Windows\System32\WindowsPowershell\V1.0\powershell.exe -ExecutionPolicy Unrestricted -File ""$currentFolder\CitrixSessionServerConfig.ps1""" -AutoLogonCount 1
 
 & shutdown -r -t 05

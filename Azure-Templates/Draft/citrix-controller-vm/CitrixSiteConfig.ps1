@@ -3,7 +3,7 @@
 # secUser must contain the domain and the user for a Domain Admin
 # fslogix.local\fsadmin is passed by the AzureRM template by default
 
-$secUser = "Script.Admin"
+$secUser = "fslogix.local\Script.Admin"
 $secPasswd = "V3ryS3cur3Sc1ptAdm1n"
 
 #Pull in the admin credentials from Azure and use them to create a PSCredentialsObject, secUser should include the domain
@@ -11,7 +11,7 @@ $userPasswd = ConvertTo-SecureString -String $secPasswd -AsPlainText -Force
 $myCreds = New-Object System.Management.Automation.PSCredential ($secUser,$userPasswd)
 
 ##XenDesktop Farm Creation Variables
-$dbserver="fsx-xdc-01.fslogix.local" 
+$dbserver="fsx-xdc-01.fslogix.local\sqlexpress" 
 $sitename="XDSite"
 $licenseserver="fsx-xdc-01.fslogix.local"
 $Citrixadmingroup="fslogix.local\domain admins"
