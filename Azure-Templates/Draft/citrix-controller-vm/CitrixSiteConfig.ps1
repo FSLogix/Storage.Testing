@@ -3,12 +3,10 @@
 # secUser must contain the domain and the user for a Domain Admin
 # fslogix.local\fsadmin is passed by the AzureRM template by default
 
-param(
-    [string] $secUser, 
-    [string] $secPasswd
-)
+$secUser = "Script.Admin"
+$secPasswd = "V3ryS3cur3Sc1ptAdm1n"
 
-#Pull in the admin credentials from Azure and use them to create a PSCredentialsObject
+#Pull in the admin credentials from Azure and use them to create a PSCredentialsObject, secUser should include the domain
 $userPasswd = ConvertTo-SecureString -String $secPasswd -AsPlainText -Force
 $myCreds = New-Object System.Management.Automation.PSCredential ($secUser,$userPasswd)
 
@@ -31,4 +29,5 @@ Set-XDLicensing -licenseserveraddress $licenseserver -licenseserverport 27000
 new-adminadministrator -name $Citrixadmingroup
 Add-adminright -administrator $Citrixadmingroup -role 'Full Administrator' -All
  
- 
+ #Reboot after farm configuration
+& Shutdown -r -t 05

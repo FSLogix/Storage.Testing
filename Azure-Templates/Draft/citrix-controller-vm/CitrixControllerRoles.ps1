@@ -69,9 +69,82 @@ Function DS_WriteLog {
 }
 #==========================================================================
 
+##AutoLogon Function to facilitate multiple script launches in succession
+Function Set-AutoLogon{
+
+    [CmdletBinding()]
+    Param(        
+        [Parameter(Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$DefaultUsername,
+        [Parameter(Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String[]]$DefaultPassword,
+        [Parameter(Mandatory=$False,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [AllowEmptyString()]
+        [String[]]$AutoLogonCount,
+        [Parameter(Mandatory=$False,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [AllowEmptyString()]
+        [String[]]$Script                
+    )
+
+    Begin
+    {
+        #Registry path declaration
+        $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+        $RegROPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"    
+    }
+    
+    Process
+    {
+        try
+        {
+            #setting registry values
+            Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String  
+            Set-ItemProperty $RegPath "DefaultUsername" -Value "$DefaultUsername" -type String  
+            Set-ItemProperty $RegPath "DefaultPassword" -Value "$DefaultPassword" -type String
+            if($AutoLogonCount)
+            {                
+                Set-ItemProperty $RegPath "AutoLogonCount" -Value "$AutoLogonCount" -type DWord            
+            }
+            else
+            {
+                Set-ItemProperty $RegPath "AutoLogonCount" -Value "1" -type DWord
+            }
+            if($Script)
+            {                
+                Set-ItemProperty $RegROPath "(Default)" -Value "$Script" -type String            
+            }
+            else
+            {            
+                Set-ItemProperty $RegROPath "(Default)" -Value "" -type String            
+            }        
+        }
+        catch
+        {
+            Write-Output "An error had occured $Error"            
+        }
+    }    
+    End
+    {        
+        #End
+    }
+}
+
+##Function to grab current script directory
+function Get-Script-Directory
+{
+    $scriptInvocation = (Get-Variable MyInvocation -Scope 1).Value
+    return Split-Path $scriptInvocation.MyCommand.Path
+}
+
+$currentFolder = Get-Script-Directory
+
 ################
 # Main section #
 ################
+
+#Script Run Credentials
+$secUser = "fslogix.local\Script.Admin"
+$secPasswd = "V3ryS3cur3Sc1ptAdm1n"
 
 # Disable File Security
 $env:SEE_MASK_NOZONECHECKS = 1
@@ -228,6 +301,9 @@ Remove-Item env:\SEE_MASK_NOZONECHECKS
 
 DS_WriteLog "-" "" $LogFile
 DS_WriteLog "I" "End of script" $LogFile
+
+#Set AutoLogon
+Set-AutoLogon -DefaultUsername $secUser -DefaultPassword $secPasswd -Script "C:\Windows\System32\WindowsPowershell\V1.0\powershell.exe -ExecutionPolicy Unrestricted -File ""$currentFolder\CitrixControllerConfig.ps1""" -AutoLogonCount 1
 
 #Reboot after role installation
 & Shutdown -r -t 05

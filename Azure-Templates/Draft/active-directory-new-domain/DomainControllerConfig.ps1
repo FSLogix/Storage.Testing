@@ -55,4 +55,10 @@ New-ADOrganizationalUnit -Name "Launchers" -Path "OU=LoginVSI,DC=fslogix,DC=loca
 #General
 New-ADOrganizationalUnit -Name "Servers" -Path "DC=fslogix,DC=local"
 
+#Create Script Admin Account and add to Domain Admins
+New-ADUser -Name Script.Admin -ChangePasswordAtLogon $false -Enabled $true -AccountPassword ("V3ryS3cur3Sc1ptAdm1n" | ConvertTo-SecureString -AsPlainText -Force)
+Add-ADGroupMember -Identity "Domain Admins" -Members Script.Admin
+
+
+
 
