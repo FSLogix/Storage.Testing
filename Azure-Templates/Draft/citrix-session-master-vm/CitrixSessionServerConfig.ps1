@@ -12,6 +12,7 @@
 #Download Filenames
 $loginVSIfilename = "LVSITarget.zip"
 $7zipFilename = "7z1805-x64.msi"
+$fslogixAppsFilename = "FSLogixAppsSetup.exe"
 
 #7Zip Executable location
 $7zipExe = "C:\Program Files\7-Zip\7z.exe"
@@ -28,6 +29,7 @@ $downloadFiles = @()
 $downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/XenApp_and_XenDesktop_7_18.iso")
 $downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/LVSITarget.zip")
 $downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/7z1805-x64.msi")
+$downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/FSLogixAppsSetup.exe")
 
 ##Log Folder Creation
 $null = New-Item -ItemType Directory -Path $logLoc -Force
@@ -89,5 +91,15 @@ if (Test-Path "$driveLetter\AutoSelect.exe") {
     $mountResult | Dismount-DiskImage
 } else {
     "Could not find XenDesktop Setup files - There must have been a problem extracting from the ISO" | Out-File -FilePath "$logLoc\VDASetup.log" -Append
+}
+
+#Run FSLogix Apps Setup
+if (Test-Path "$downloadLoc\$fslogixAppsFilename") {
+    ##Start FSLogix Apps Setup
+    #Start the installation with all the necessary parameters
+    Start-Process -FilePath "$downloadLoc\$fslogixAppsFilename" -ArgumentList "/install","/quiet","/norestart" -Wait
+
+} else {
+    "Could not find FSLogix Apps Setup files - There must have been a problem downloading the file, please install manually" | Out-File -FilePath "$logLoc\VDASetup.log" -Append
 }
 & shutdown -r -t 05
