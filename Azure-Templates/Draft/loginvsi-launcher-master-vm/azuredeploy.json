@@ -34,7 +34,7 @@
     "_artifactsLocationSasToken":"",
     "scriptFileName": "LoginVSILauncherConfig.ps1",
     "domainJoinOptions": 3,
-    "ouPath": "OU=Launchers,OU=LoginVSI,DC=fslogix,DC=local",
+    "ouPath": "OU=Launcher,OU=Computers,OU=LoginVSI,DC=fslogix,DC=local",
     "VMSize": "Standard_DS2_v2"   
   },
   "resources": [     
