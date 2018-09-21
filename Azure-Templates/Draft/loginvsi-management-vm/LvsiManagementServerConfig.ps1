@@ -41,7 +41,8 @@ $downloadLoc = "C:\CustomPOSH_Downloads"
 $downloadFiles = @()
 $downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/LoginVSI4132.exe")
 $downloadFiles += ("https://publicfiledownloads.blob.core.windows.net/downloads/7z1805-x64.msi")
-
+$downloadFiles += ("https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Downloads/LoginVSI_Workloads/FSLogix_KnowledgeWorker.txt")
+$downloadFiles += ("https://raw.githubusercontent.com/FSLogix/Storage.Testing/master/Azure-Templates/Downloads/LoginVSI_Workloads/FSLogix_TaskWorker.txt")
 
 Function Set-FolderACL {
     Param
@@ -98,4 +99,19 @@ if (Test-Path "$downloadLoc\$loginVSIfilename") {
     Start-Process -FilePath "$downloadLoc\LoginVSI4132\1. Dataserver Setup\Setup.exe" -ArgumentList "-s $loginVSIshareName","-i","-qb" -Wait
 } else {
     "Could not find LoginVSI Zip File - Perhaps it failed to download, Please install manually" | Out-File -FilePath "$logLoc\Setup.log" -Append
+}
+
+##Place custom workloads into the correct LVSI folder
+New-Item -ItemType Directory -Path C:\VSI_Share\_VSI_Workloads -Name "Custom Workloads" -Force
+
+if (Test-Path "$downloadLoc\FSLogix_KnowledgeWorker.txt") {
+    Copy-Item -Path C:\CustomPOSH_Downloads\FSLogix_KnowledgeWorker.txt -Destination "C:\VSI_Share\_VSI_Workloads\Custom Workloads" -Force
+} else {
+    "Could not copy LVSI custom workloads (FSLogix_KnowledgeWorker.txt) - Perhaps it failed to download, Please install manually"
+}
+
+if (Test-Path "$downloadLoc\FSLogix_TaskWorker.txt") {
+    Copy-Item -Path C:\CustomPOSH_Downloads\FSLogix_TaskWorker.txt -Destination "C:\VSI_Share\_VSI_Workloads\Custom Workloads" -Force
+} else {
+    "Could not copy LVSI custom workloads (FSLogix_TaskWorker.txt) - Perhaps it failed to download, Please install manually"
 }
